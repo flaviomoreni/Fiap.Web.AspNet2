@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<h1>Cliente Cadastrado com sucesso!</h1>
+<h2>Id do Cliente: @ViewData["ClienteId"]</h2>
+<h3>@ViewBag.Mensagem</h3>
+<h4>@ViewBag.NomeCliente</h4>
+
+<div>
+    @{
+        ClienteModel clienteData = ViewData["ClienteModel"] as ClienteModel;
+        ClienteModel clienteTemp = TempData["ClienteModel"] as ClienteModel;
+        ClienteModel clienteBag = ViewBag.ClienteModel;
+    }
+
+    <h5>Data: @clienteData.Nome</h5>
+    <h5>Bag:  @clienteBag.Nome</h5>
+    <h5>Temp:  @clienteTemp.Nome</h5>
+
+
+</div>
