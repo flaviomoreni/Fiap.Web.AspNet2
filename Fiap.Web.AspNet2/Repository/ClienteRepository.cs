@@ -9,15 +9,18 @@ namespace Fiap.Web.AspNet2.Repository
     {
 
         //private readonly Object context;
-        private IList<ClienteModel> listaClientes;
+        private readonly IList<ClienteModel> listaClientes;
 
         public ClienteRepository()
         {
             // context = new Context;
-            listaClientes = new List<ClienteModel>();
-            listaClientes.Add(new ClienteModel(1, "Flávio", "flavio@email.com"));
-            listaClientes.Add(new ClienteModel(2, "Eduardo", "eduardo@email.com"));
-            listaClientes.Add(new ClienteModel(3, "Moreni", "moreni@email.com"));
+            listaClientes = new List<ClienteModel>
+            {
+                new ClienteModel(1, "Flávio", "flavio@email.com", DateTime.Parse("1989-09-01"), "Observação 1" , 1),
+                new ClienteModel(2, "Eduardo", "eduardo@email.com", DateTime.Parse("1993-12-01"), "Observação 2",  2),
+                new ClienteModel(3, "Moreni", "moreni@email.com",DateTime.Parse("1980-07-08"), "Observação 2" , 4)
+            };
+
         }
 
         public IList<ClienteModel> FindAll()

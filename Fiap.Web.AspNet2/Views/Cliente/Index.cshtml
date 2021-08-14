@@ -1,13 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<ClienteModel>
+
+
 @{
+
 }
 
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+
 
             <h1>Clientes</h1>
             <p class="toolbar">
@@ -23,6 +25,10 @@
                 }
             }
 
+            
+
+
+            @if ( Model.Count() > 0 ) {  
             <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
@@ -32,35 +38,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>#1</td>
-                        <td>Flávio</td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="#">Detalhes</a>
-                            <a class="btn btn-warning btn-sm" href="#">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#2</td>
-                        <td>Eduardo</td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="#">Detalhes</a>
-                            <a class="btn btn-warning btn-sm" href="#">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#3</td>
-                        <td>Moreni</td>
-                        <td>
-                            <a class="btn btn-success btn-sm" href="#">Detalhes</a>
-                            <a class="btn btn-warning btn-sm" href="#">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="#">Excluir</a>
-                        </td>
-                    </tr>
+                    @foreach ( var cliente in Model ) {
+                        <tr>
+                            <td>#@cliente.ClienteId</td>
+                            <td>@cliente.Nome</td>
+                            <td>
+                                @Html.ActionLink("Detalhes", "Detalhe", "Cliente", 
+                                            new { id = cliente.ClienteId }, 
+                                            new { @class = "btn btn-success btn-sm" }  )
+                                <a class="btn btn-warning btn-sm" href="/Cliente/Alterar/@cliente.ClienteId">Editar</a>
+                                <a class="btn btn-danger btn-sm" href="/Cliente/Excluir/@cliente.ClienteId">Excluir</a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
+            } else
+            {
+                <div class="alert alert-warning" role="alert">
+                    <h4>Não existem clientes cadastrados até o momento.</h4>
+                </div>
+            }
+
+
         </div>
     </div>
 </div>

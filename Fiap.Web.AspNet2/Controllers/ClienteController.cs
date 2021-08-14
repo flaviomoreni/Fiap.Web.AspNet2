@@ -1,6 +1,7 @@
 ﻿using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +12,42 @@ namespace Fiap.Web.AspNet2.Controllers
     public class ClienteController : Controller
     {
 
+        private readonly ClienteRepository clienteRepository;
+        private readonly RepresentanteRepository representanteRepository;
+
+        public ClienteController()
+        {
+            clienteRepository = new ClienteRepository();
+            representanteRepository = new RepresentanteRepository();
+        }
+
+
         [HttpGet]
         public IActionResult Index()
         {
             Console.WriteLine("validando o acesso ao controller Home e ação Index");
-            // if ( user.hasAccess("clientes-listar") ) { }
-            return View();
+
+            IList<ClienteModel> clientes = clienteRepository.FindAll();
+
+            return View(clientes);
         }
 
         [HttpGet]
         public IActionResult Novo()
         {
-            return View();
+            IList<RepresentanteModel> representantes = representanteRepository.FindAll();
+
+            ViewBag.Representantes = representantes;
+
+            return View( new ClienteModel() );
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(ClienteModel clienteModel)
+        public IActionResult Novo(ClienteModel clienteModel)
         {
-            TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} cadastrado com sucesso";
+            clienteRepository.Insert(clienteModel);
 
+            TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} cadastrado com sucesso";
             return RedirectToAction("Index");
         }
 
@@ -38,19 +56,19 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Alterar(int id)
         {
-            ClienteRepository clienteRepository = new ClienteRepository();
             ClienteModel clienteModel = clienteRepository.FindById(id);
 
-            //ViewBag.ClienteModel = clienteModel;
+            IList<RepresentanteModel> representantes = representanteRepository.FindAll();
+            //ViewBag.Representantes = representantes;
+            ViewBag.Representantes = new SelectList(representantes, "RepresentanteId", "NomeRepresentante");
 
             return View(clienteModel);
         }
 
-        [HttpPost]
         //Capturando os dados, gravando no banco e exibindo a mensagem de sucesso.
-        public IActionResult Salvar(ClienteModel clienteModel)
+        [HttpPost]
+        public IActionResult Alterar(ClienteModel clienteModel)
         {
-            ClienteRepository clienteRepository = new ClienteRepository();
             clienteRepository.Update(clienteModel);
 
             TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} alterado com sucesso";

@@ -1,35 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ClienteModel
+
 @{
+
 }
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="well">
-                <h2>Cliente - Cadastrar</h2>
+                <h2>Cliente - Novo</h2>
 
-                <form action="/Cliente/Cadastrar" method="post">
+                <form asp-controller="Cliente" asp-action="Novo" method="post">
 
                     <div class="form-group">
-                        <label class="control-label">Nome:</label>
-                        <input class="form-control col-5" type="text" name="nome" />
+                        <label class="control-label" asp-for="Nome"></label>
+                        <input class="form-control col-5" asp-for="Nome" />
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Email:</label>
-                        <input class="form-control col-5" type="email" name="email" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Nascimento:</label>
-                        <input class="form-control col-5" type="date" name="dataNascimento" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Observação:</label>
-                        <textarea name="observacao" class="form-control" rows="4" cols="100"></textarea>
+                        <label class="control-label" asp-for="Email"></label>
+                        <input class="form-control col-8" asp-for="Email" />
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label">Representante</label>
+                        <select class="form-control col-5" name="RepresentanteId">
+                            <option>Selecione</option>
+                            @foreach( var repre in ViewBag.Representantes) { 
+                                <option value="@repre.RepresentanteId"> @repre.NomeRepresentante</option>
+                            }
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <label class="control-label" asp-for="DataNascimento"></label>
+                        <input class="form-control col-5" asp-for="DataNascimento" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" asp-for="Observacao"></label>
+                        <textarea class="form-control" asp-for="Observacao"></textarea>
+                    </div>
                     <a href="#" class="btn btn-default btn-lg">Cancelar</a>
                     <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
                 </form>
