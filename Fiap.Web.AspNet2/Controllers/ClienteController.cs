@@ -1,4 +1,5 @@
 ﻿using Fiap.Web.AspNet2.Models;
+using Fiap.Web.AspNet2.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace Fiap.Web.AspNet2.Controllers
 {
     public class ClienteController : Controller
     {
+
+        [HttpGet]
         public IActionResult Index()
         {
             Console.WriteLine("validando o acesso ao controller Home e ação Index");
@@ -16,17 +19,41 @@ namespace Fiap.Web.AspNet2.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public IActionResult Novo()
         {
             return View();
         }
 
-
+        [HttpPost]
         public IActionResult Cadastrar(ClienteModel clienteModel)
         {
             TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} cadastrado com sucesso";
 
+            return RedirectToAction("Index");
+        }
+
+
+        // Abrindo a tela de alteração
+        [HttpGet]
+        public IActionResult Alterar(int id)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            ClienteModel clienteModel = clienteRepository.FindById(id);
+
+            //ViewBag.ClienteModel = clienteModel;
+
+            return View(clienteModel);
+        }
+
+        [HttpPost]
+        //Capturando os dados, gravando no banco e exibindo a mensagem de sucesso.
+        public IActionResult Salvar(ClienteModel clienteModel)
+        {
+            ClienteRepository clienteRepository = new ClienteRepository();
+            clienteRepository.Update(clienteModel);
+
+            TempData["mensagemSucesso"] = $"Cliente {clienteModel.Nome} alterado com sucesso";
             return RedirectToAction("Index");
         }
 

@@ -40,22 +40,23 @@ namespace Fiap.Web.AspNet2.Repository
 
         }
 
-        public int Insert(ClienteModel produtoModel)
+        public int Insert(ClienteModel clienteModel)
         {
-            Console.WriteLine($"Cliente repository - Insert Produto: {produtoModel.Nome}");
+            Console.WriteLine($"Cliente repository - Insert Produto: {clienteModel.Nome}");
 
-            listaClientes.Add(produtoModel);
+            listaClientes.Add(clienteModel);
             return new Random().Next();
         }
 
         public void Delete(int id)
         {
             Console.WriteLine($"Cliente repository - Delete Id: {id}");
+            // commando entity
         }
 
-        public void Update(ClienteModel produtoModel)
+        public void Update(ClienteModel clienteModel)
         {
-            Console.WriteLine($"Cliente repository - Update Produto: {produtoModel.Nome}");
+            Console.WriteLine($"Cliente repository - Update Produto: {clienteModel.Nome}");
         }
 
     }
