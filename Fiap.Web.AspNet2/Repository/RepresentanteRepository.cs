@@ -30,5 +30,23 @@ namespace Fiap.Web.AspNet2.Repository
         }
 
 
+        public RepresentanteModel FindById(int id)
+        {
+            Console.WriteLine($"Representante repository - FindById Produto: {id}");
+
+            if (id > listaRepresentantes.Count)
+            {
+                throw new Exception("Representante não encontrado");
+            }
+            else
+            {
+                return listaRepresentantes[id - 1];
+            }
+
+        }
+
+
+
+
     }
 }

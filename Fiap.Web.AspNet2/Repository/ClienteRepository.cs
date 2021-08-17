@@ -16,15 +16,26 @@ namespace Fiap.Web.AspNet2.Repository
             // context = new Context;
             listaClientes = new List<ClienteModel>
             {
-                new ClienteModel(1, "Flávio", "flavio@email.com", DateTime.Parse("1989-09-01"), "Observação 1" , 1),
-                new ClienteModel(2, "Eduardo", "eduardo@email.com", DateTime.Parse("1993-12-01"), "Observação 2",  2),
-                new ClienteModel(3, "Moreni", "moreni@email.com",DateTime.Parse("1980-07-08"), "Observação 2" , 4)
+                new ClienteModel(1, "Flávio", "flavio@email.com", DateTime.Parse("1989-09-01"), "Observação 1" , 1, new RepresentanteModel(1,"Ricardo")),
+                new ClienteModel(2, "Eduardo", "eduardo@email.com", DateTime.Parse("1993-12-01"), "Observação 2",  2, new RepresentanteModel(1,"Ricardo")),
+                new ClienteModel(3, "Moreni", "moreni@email.com",DateTime.Parse("1980-07-08"), "Observação 2" , 4 , new RepresentanteModel(1,"Ricardo"))
             };
 
         }
 
         public IList<ClienteModel> FindAll()
         {
+            /*
+            var connection = new OdbcConnection(connectionString);
+            var queryText = "SELECT * FROM table1 WHERE Name = ?";
+            var data = connection.Query<Model>(queryText, 
+                    new { Name = new DbString { Value = name, Length = 10, IsAnsi = true } 
+            });
+            return data.ToList();
+            */
+
+
+
             Console.WriteLine($"Cliente repository - FindAll");
             return listaClientes;
         }

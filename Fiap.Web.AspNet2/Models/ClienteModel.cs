@@ -33,6 +33,12 @@ namespace Fiap.Web.AspNet2.Models
             RepresentanteId = representanteId;
         }
 
+        public ClienteModel(int clienteId, string nome, string email, DateTime dataNascimento, string observacao, int representanteId, RepresentanteModel representante) : this(clienteId, nome, email, dataNascimento, observacao, representanteId)
+        {
+            Representante = representante;
+        }
+
+
         [Display(Name ="Id do Cliente")]
         [HiddenInput]
         [Required]

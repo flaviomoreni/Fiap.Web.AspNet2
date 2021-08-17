@@ -75,6 +75,17 @@ namespace Fiap.Web.AspNet2.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Detalhe(int id)
+        {
+            var clienteModel = clienteRepository.FindById(id);
+
+            //var representanteModel = representanteRepository.FindById(clienteModel.RepresentanteId);
+            //clienteModel.Representante = representanteModel;
+
+            return View( clienteModel );
+        }
+
 
         /*
         public IActionResult Cadastrar(ClienteModel clienteModel)
