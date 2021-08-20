@@ -34,7 +34,7 @@ namespace Fiap.Web.AspNet2.Controllers
         public IActionResult Novo()
         {
             IList<RepresentanteModel> representantes = representanteRepository.FindAll();
-            return View( new ClienteModel() );
+            return View(new ClienteModel());
         }
 
         [HttpPost]
@@ -73,7 +73,16 @@ namespace Fiap.Web.AspNet2.Controllers
         public IActionResult Detalhe(int id)
         {
             var clienteModel = clienteRepository.FindById(id);
-            return View( clienteModel );
+            return View(clienteModel);
+        }
+
+
+        [HttpGet]
+        public IActionResult Excluir(int id)
+        {
+            clienteRepository.Delete(id);
+            TempData["mensagemSucesso"] = $"Cliente removido com sucesso";
+            return RedirectToAction("Index");
         }
 
 

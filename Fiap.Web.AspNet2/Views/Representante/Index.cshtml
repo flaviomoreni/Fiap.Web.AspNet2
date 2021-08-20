@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RepresentanteModel>
+
+
+@{
+
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <h1>Clientes</h1>
+            <p class="toolbar">
+
+                <a class="create btn btn-default" asp-controller="Representante" asp-action="Novo">Novo Representante</a>
+            </p>
+
+            @{
+                String mensagemSucesso = (String)TempData["mensagemSucesso"];
+                if (!String.IsNullOrEmpty(mensagemSucesso))
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <h4>@mensagemSucesso</h4>
+                    </div>
+                }
+            }
+
+
+
+
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Id</th>
+                            <th data-field="name">Nome</th>
+                            <th class="actions" width="220">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>#@item.RepresentanteId</td>
+                            <td>@item.NomeRepresentante</td>
+                            <td>
+                                <a class="btn btn-warning btn-sm"
+                                   asp-controller="Representante"
+                                   asp-action="Alterar"
+                                   asp-route-id="@item.RepresentanteId">Editar</a>
+                                <a class="btn btn-danger btn-sm"
+                                   asp-controller="Representante"
+                                   asp-action="Excluir"
+                                   asp-route-id="@item.RepresentanteId">Excluir</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    <h4>Não existem clientes cadastrados até o momento.</h4>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
