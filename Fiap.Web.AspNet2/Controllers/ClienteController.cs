@@ -23,6 +23,7 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             Console.WriteLine("validando o acesso ao controller Home e ação Index");
 
             IList<ClienteModel> clientes = clienteRepository.FindAll();

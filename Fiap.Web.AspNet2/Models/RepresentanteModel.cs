@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fiap.Web.AspNet2.Models
@@ -13,6 +15,10 @@ namespace Fiap.Web.AspNet2.Models
 
         //[Column("NomeRepresentante")]
         public String NomeRepresentante { get; set; }
+
+
+        //Navigator Property
+        public ICollection<ClienteModel> Clientes { get; set; }
 
 
         public RepresentanteModel()

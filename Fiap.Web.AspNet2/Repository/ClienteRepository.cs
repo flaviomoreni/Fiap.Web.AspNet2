@@ -1,76 +1,59 @@
-﻿using Fiap.Web.AspNet2.Models;
+﻿using Fiap.Web.AspNet2.Data;
+using Fiap.Web.AspNet2.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Fiap.Web.AspNet2.Repository
 {
     public class ClienteRepository
     {
 
-        //private readonly Object context;
-        private readonly IList<ClienteModel> listaClientes;
+
+        private readonly DataContext context;
+
 
         public ClienteRepository()
         {
-            // context = new Context;
-            listaClientes = new List<ClienteModel>
-            {
-                new ClienteModel(1, "Flávio", "flavio@email.com", DateTime.Parse("1989-09-01"), "Observação 1" , 1, new RepresentanteModel(1,"Ricardo")),
-                new ClienteModel(2, "Eduardo", "eduardo@email.com", DateTime.Parse("1993-12-01"), "Observação 2",  2, new RepresentanteModel(1,"Ricardo")),
-                new ClienteModel(3, "Moreni", "moreni@email.com",DateTime.Parse("1980-07-08"), "Observação 2" , 4 , new RepresentanteModel(1,"Ricardo"))
-            };
+            context = new DataContext();
 
         }
 
         public IList<ClienteModel> FindAll()
         {
-            /*
-            var connection = new OdbcConnection(connectionString);
-            var queryText = "SELECT * FROM table1 WHERE Name = ?";
-            var data = connection.Query<Model>(queryText, 
-                    new { Name = new DbString { Value = name, Length = 10, IsAnsi = true } 
-            });
-            return data.ToList();
-            */
-
-
-
-            Console.WriteLine($"Cliente repository - FindAll");
-            return listaClientes;
+            return context.Cliente.ToList();
         }
 
         public ClienteModel FindById(int id)
         {
-            Console.WriteLine($"Cliente repository - FindById Produto: {id}");
+            //var clienteModel = context.Cliente.Find(id);
 
-            if ( id > listaClientes.Count )
-            {
-                throw new Exception("Cliente não encontrado");
-            } else
-            {
-                return listaClientes[id - 1];
-            }
+            var clienteModel = context.Cliente
+                    .Include(c => c.Representante)
+                    .SingleOrDefault(c => c.ClienteId == id);
+
+            return clienteModel;
 
         }
 
         public int Insert(ClienteModel clienteModel)
         {
-            Console.WriteLine($"Cliente repository - Insert Produto: {clienteModel.Nome}");
-
-            listaClientes.Add(clienteModel);
-            return new Random().Next();
+            context.Cliente.Add(clienteModel);
+            context.SaveChanges();
+            return clienteModel.ClienteId;
         }
 
         public void Delete(int id)
         {
-            Console.WriteLine($"Cliente repository - Delete Id: {id}");
-            // commando entity
+            context.Cliente.Remove(new ClienteModel() { ClienteId = id });
+            context.SaveChanges();
         }
 
         public void Update(ClienteModel clienteModel)
         {
-            Console.WriteLine($"Cliente repository - Update Produto: {clienteModel.Nome}");
+            context.Cliente.Update(clienteModel);
+            context.SaveChanges();
         }
 
     }

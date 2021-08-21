@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,6 +43,8 @@ namespace Fiap.Web.AspNet2.Models
         [Display(Name ="Id do Cliente")]
         [HiddenInput]
         [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClienteId { get; set; }
 
         [Display(Name = "Nome do Cliente")]
@@ -62,8 +65,13 @@ namespace Fiap.Web.AspNet2.Models
 
 
         public int RepresentanteId { get; set; }
-
+        [ForeignKey("RepresentanteId")]
         public RepresentanteModel Representante { get; set; }
+
+
+        //public int SegmentoId { get; set; } // Varejo, Uniclass, Personalite, Private
+        //[ForeignKey("SegmentoId")]
+        //public SegmentoModel Segmento { get; set; }
 
     }
 }
