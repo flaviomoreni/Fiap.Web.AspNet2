@@ -4,14 +4,16 @@ using Fiap.Web.AspNet2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fiap.Web.AspNet2.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210821173756_ProdutoLojaFiap")]
+    partial class ProdutoLojaFiap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,21 +93,6 @@ namespace Fiap.Web.AspNet2.Migrations
                     b.ToTable("Cliente");
                 });
 
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.LojaModel", b =>
-                {
-                    b.Property<int>("LojaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NomeLoja")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LojaId");
-
-                    b.ToTable("Loja");
-                });
-
             modelBuilder.Entity("Fiap.Web.AspNet2.Models.PaisModel", b =>
                 {
                     b.Property<int>("PaisId")
@@ -127,44 +114,6 @@ namespace Fiap.Web.AspNet2.Migrations
                     b.HasIndex("NomePais");
 
                     b.ToTable("Pais");
-                });
-
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.ProdutoLojaModel", b =>
-                {
-                    b.Property<int>("ProdutoLojaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LojaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProdutoLojaId");
-
-                    b.HasIndex("LojaId");
-
-                    b.HasIndex("ProdutoId", "LojaId")
-                        .IsUnique();
-
-                    b.ToTable("ProdutoLoja");
-                });
-
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.ProdutoModel", b =>
-                {
-                    b.Property<int>("ProdutoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NomeProduto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProdutoId");
-
-                    b.ToTable("Produto");
                 });
 
             modelBuilder.Entity("Fiap.Web.AspNet2.Models.RepresentanteModel", b =>
@@ -191,35 +140,6 @@ namespace Fiap.Web.AspNet2.Migrations
                         .IsRequired();
 
                     b.Navigation("Representante");
-                });
-
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.ProdutoLojaModel", b =>
-                {
-                    b.HasOne("Fiap.Web.AspNet2.Models.LojaModel", "Loja")
-                        .WithMany("ProdutoLojas")
-                        .HasForeignKey("LojaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fiap.Web.AspNet2.Models.ProdutoModel", "Produto")
-                        .WithMany("ProdutoLojas")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Loja");
-
-                    b.Navigation("Produto");
-                });
-
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.LojaModel", b =>
-                {
-                    b.Navigation("ProdutoLojas");
-                });
-
-            modelBuilder.Entity("Fiap.Web.AspNet2.Models.ProdutoModel", b =>
-                {
-                    b.Navigation("ProdutoLojas");
                 });
 
             modelBuilder.Entity("Fiap.Web.AspNet2.Models.RepresentanteModel", b =>
