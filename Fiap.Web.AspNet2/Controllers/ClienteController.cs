@@ -34,6 +34,8 @@ namespace Fiap.Web.AspNet2.Controllers
         public IActionResult Novo()
         {
             IList<RepresentanteModel> representantes = representanteRepository.FindAll();
+            ViewBag.Representantes = representantes;
+
             return View(new ClienteModel());
         }
 
