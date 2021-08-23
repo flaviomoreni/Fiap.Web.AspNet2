@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RepresentanteModel>
+﻿@model IEnumerable<LojaModel>
 
 
 @{
@@ -11,10 +11,10 @@
         <div class="col-md-12">
 
 
-            <h1>Representantes</h1>
+            <h1>Lojas</h1>
             <p class="toolbar">
 
-                <a class="create btn btn-default" asp-controller="Representante" asp-action="Novo">Novo Representante</a>
+                <a class="create btn btn-outline-dark" asp-controller="Loja" asp-action="Create">Nova Loja</a>
             </p>
 
             @{
@@ -43,20 +43,24 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>#@item.RepresentanteId</td>
-                            <td>@item.NomeRepresentante</td>
-                            <td>
-                                <a class="btn btn-warning btn-sm"
-                                   asp-controller="Representante"
-                                   asp-action="Alterar"
-                                   asp-route-id="@item.RepresentanteId">Editar</a>
-                                <a class="btn btn-danger btn-sm"
-                                   asp-controller="Representante"
-                                   asp-action="Excluir"
-                                   asp-route-id="@item.RepresentanteId">Excluir</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>#@item.LojaId</td>
+                                <td>@item.NomeLoja</td>
+                                <td>
+                                    <a class="btn btn-success btn-sm"
+                                       asp-controller="Loja"
+                                       asp-action="Details"
+                                       asp-route-id="@item.LojaId">Detalhes</a>
+                                    <a class="btn btn-warning btn-sm"
+                                       asp-controller="Loja"
+                                       asp-action="Edit"
+                                       asp-route-id="@item.LojaId">Editar</a>
+                                    <a class="btn btn-danger btn-sm"
+                                       asp-controller="Loja"
+                                       asp-action="Delete"
+                                       asp-route-id="@item.LojaId">Excluir</a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -64,7 +68,7 @@
             else
             {
                 <div class="alert alert-warning" role="alert">
-                    <h4>Não existem representantes cadastrados até o momento.</h4>
+                    <h4>Não existem lojas cadastradas até o momento.</h4>
                 </div>
             }
 

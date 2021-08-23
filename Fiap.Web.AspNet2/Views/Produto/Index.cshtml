@@ -1,20 +1,14 @@
-﻿@model IEnumerable<RepresentanteModel>
-
-
-@{
-
-}
-
+﻿@model IEnumerable<ProdutoModel>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
 
 
-            <h1>Representantes</h1>
+            <h1>Produtos</h1>
             <p class="toolbar">
 
-                <a class="create btn btn-default" asp-controller="Representante" asp-action="Novo">Novo Representante</a>
+                <a class="create btn btn-outline-dark" asp-controller="Produto" asp-action="Create">Novo Produto</a>
             </p>
 
             @{
@@ -43,20 +37,20 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>#@item.RepresentanteId</td>
-                            <td>@item.NomeRepresentante</td>
-                            <td>
-                                <a class="btn btn-warning btn-sm"
-                                   asp-controller="Representante"
-                                   asp-action="Alterar"
-                                   asp-route-id="@item.RepresentanteId">Editar</a>
-                                <a class="btn btn-danger btn-sm"
-                                   asp-controller="Representante"
-                                   asp-action="Excluir"
-                                   asp-route-id="@item.RepresentanteId">Excluir</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>#@item.ProdutoId</td>
+                                <td>@item.NomeProduto</td>
+                                <td>
+                                    <a class="btn btn-success btn-sm"
+                                       asp-controller="Produto"
+                                       asp-action="Details"
+                                       asp-route-id="@item.ProdutoId">Detalhes</a>
+                                    <a class="btn btn-danger btn-sm"
+                                       asp-controller="Produto"
+                                       asp-action="Delete"
+                                       asp-route-id="@item.ProdutoId">Excluir</a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -64,7 +58,7 @@
             else
             {
                 <div class="alert alert-warning" role="alert">
-                    <h4>Não existem representantes cadastrados até o momento.</h4>
+                    <h4>Não existem lojas cadastradas até o momento.</h4>
                 </div>
             }
 
