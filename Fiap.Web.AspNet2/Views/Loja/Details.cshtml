@@ -13,6 +13,22 @@
                         <input class="form-control col-5" asp-for="NomeLoja" />
                     </div>
 
+                    @if (Model.ProdutoLojas.Count > 0)
+                    {
+                        <h3>Produtos:</h3>
+                        <ul>
+                            @foreach (var item in Model.ProdutoLojas)
+                            {
+                                <li>@item.Produto.NomeProduto</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <h3>Não existem produtos no estoque dessa loja!!!!</h3>
+                    }
+
+
                     <a href="#" class="btn btn-default btn-lg">Cancelar</a>
                 </form>
             </div>

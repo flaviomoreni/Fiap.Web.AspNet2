@@ -35,6 +35,7 @@ namespace Fiap.Web.AspNet2.Controllers
             return View( produtoRepository.FindById(id) );
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.Lojas = lojaRepository.FindAll();

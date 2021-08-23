@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,11 @@ namespace Fiap.Web.AspNet2.Repository
 
         public LojaModel FindById(int id)
         {
-            var lojaModel = context.Loja.Find(id);
+            //var lojaModel = context.Loja.Find(id);
+            var lojaModel = context.Loja
+                .Include(l => l.ProdutoLojas)
+                    .ThenInclude( pl => pl.Produto )
+                .SingleOrDefault( l => l.LojaId == id );
 
             return lojaModel;
 
