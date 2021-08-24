@@ -47,10 +47,15 @@ namespace Fiap.Web.AspNet2.Repository
             context.SaveChanges();
         }
 
-        public void Update(ProdutoModel produtoModel)
+        public void Update(ProdutoModel produtoModelNovo)
         {
-            context.Produto.Update(produtoModel);
+            var produtoAtual = FindById(produtoModelNovo.ProdutoId);
+            produtoAtual.NomeProduto = produtoModelNovo.NomeProduto;
+            produtoAtual.ProdutoLojas = produtoModelNovo.ProdutoLojas;
+
+            context.Produto.Update(produtoAtual);
             context.SaveChanges();
+
         }
 
     }

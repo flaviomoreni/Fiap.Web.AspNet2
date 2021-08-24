@@ -3,6 +3,7 @@ using Fiap.Web.AspNet2.Repository;
 using Fiap.Web.AspNet2.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,28 +67,49 @@ namespace Fiap.Web.AspNet2.Controllers
             return RedirectToAction("Index");
         }
 
-        /*
-        // GET: ProdutoController/Edit/5
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            // Listando todas as lojas
+            var lojas = lojaRepository.FindAll();
+            ViewBag.Lojas = new SelectList(lojas, "LojaId", "NomeLoja");
+
+            
+            // Consultando o Produto
+            var produtoModel = produtoRepository.FindById(id);
+            var produtoLojaVM = new ProdutoLojaViewModel();
+            produtoLojaVM.Produto = produtoModel;
+            produtoLojaVM.LojaId = produtoModel.ProdutoLojas.Select( l => l.LojaId).ToList();
+
+            return View(produtoLojaVM);
         }
 
-        // POST: ProdutoController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(ProdutoLojaViewModel produtoVM)
         {
-            try
+            ProdutoModel produtoModel = produtoVM.Produto;
+            produtoModel.ProdutoLojas = new List<ProdutoLojaModel>();
+
+            foreach (var loja in produtoVM.LojaId)
             {
-                return RedirectToAction(nameof(Index));
+                var produtoLojaModel = new ProdutoLojaModel()
+                {
+                    LojaId = loja,
+                    Produto = produtoModel
+                };
+
+                produtoModel.ProdutoLojas.Add(produtoLojaModel);
             }
-            catch
-            {
-                return View();
-            }
+
+
+            produtoRepository.Update(produtoModel);
+
+            TempData["mensagemSucesso"] = "Produto alterado com sucesso";
+            return RedirectToAction("Index");
         }
 
+        /*
         // GET: ProdutoController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -109,5 +131,6 @@ namespace Fiap.Web.AspNet2.Controllers
             }
         }
         */
+        
     }
 }
