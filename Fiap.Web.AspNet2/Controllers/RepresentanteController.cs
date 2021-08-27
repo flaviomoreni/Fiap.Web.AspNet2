@@ -7,11 +7,11 @@ namespace Fiap.Web.AspNet2.Controllers
 {
     public class RepresentanteController : Controller
     {
-        private readonly RepresentanteRepository representanteRepository;
+        private readonly IRepresentanteRepository representanteRepository;
 
-        public RepresentanteController()
+        public RepresentanteController( IRepresentanteRepository _representanteRepository )
         {
-            representanteRepository = new RepresentanteRepository();
+            representanteRepository = _representanteRepository;
         }
 
 

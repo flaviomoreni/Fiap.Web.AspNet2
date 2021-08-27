@@ -16,7 +16,9 @@ namespace Fiap.Web.AspNet2.Controllers
         public ClienteController()
         {
             clienteRepository = new ClienteRepository();
-            representanteRepository = new RepresentanteRepository();
+
+            //representanteRepository = new RepresentanteRepository();
+            representanteRepository = null;
         }
 
 

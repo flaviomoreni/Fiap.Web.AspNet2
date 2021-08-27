@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace Fiap.Web.AspNet2.Repository
 {
-    public class RepresentanteRepository
+    public class RepresentanteRepository : IRepresentanteRepository
     {
 
         private readonly DataContext context;
 
-        public RepresentanteRepository()
+        public RepresentanteRepository(DataContext _dataContext)
         {
-            context = new DataContext();
+            context = _dataContext;
         }
 
 
         public IList<RepresentanteModel> FindAll()
         {
             var lista = context.Representante.ToList();
-            //var lista = context.Representante.Where( r => r.NomeRepresentante.Contains("a") ).ToList();
             return lista;
         }
+
 
 
         public RepresentanteModel FindById(int id)
