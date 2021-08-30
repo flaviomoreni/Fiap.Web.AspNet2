@@ -1,5 +1,5 @@
 ﻿using Fiap.Web.AspNet2.Models;
-using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

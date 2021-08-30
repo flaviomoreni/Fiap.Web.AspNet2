@@ -1,22 +1,18 @@
 ﻿using Fiap.Web.AspNet2.Models;
-using Fiap.Web.AspNet2.Repository;
-using Microsoft.AspNetCore.Http;
+using Fiap.Web.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
     public class LojaController : Controller
     {
 
-        private readonly LojaRepository lojaRepository;
+        private readonly ILojaRepository lojaRepository;
 
-        public LojaController()
+        public LojaController(ILojaRepository _ilojaRepository)
         {
-            lojaRepository = new LojaRepository();
+            lojaRepository = _ilojaRepository;
         }
 
         public ActionResult Index()

@@ -1,5 +1,6 @@
 using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,9 @@ namespace Fiap.Web.AspNet2
             services.AddDbContext<DataContext>(option => option.UseSqlServer(connectionString));
 
             services.AddScoped<IRepresentanteRepository, RepresentanteRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<ILojaRepository, LojaRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
         }
 

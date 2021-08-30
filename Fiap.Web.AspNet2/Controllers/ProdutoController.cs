@@ -1,27 +1,23 @@
 ﻿using Fiap.Web.AspNet2.Models;
-using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interface;
 using Fiap.Web.AspNet2.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
     public class ProdutoController : Controller
     {
 
-        private readonly LojaRepository lojaRepository;
-        private readonly ProdutoRepository produtoRepository;
+        private readonly ILojaRepository lojaRepository;
+        private readonly IProdutoRepository produtoRepository;
 
-        public ProdutoController()
+        public ProdutoController(ILojaRepository _lojaRepository, IProdutoRepository _produtoRepository)
         {
-            lojaRepository = new LojaRepository();
-            produtoRepository = new ProdutoRepository();
-
+            lojaRepository = _lojaRepository;
+            produtoRepository = _produtoRepository;
         }
 
 

@@ -1,5 +1,5 @@
 ﻿using Fiap.Web.AspNet2.Models;
-using Fiap.Web.AspNet2.Repository;
+using Fiap.Web.AspNet2.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -10,15 +10,13 @@ namespace Fiap.Web.AspNet2.Controllers
     public class ClienteController : Controller
     {
 
-        private readonly ClienteRepository clienteRepository;
-        private readonly RepresentanteRepository representanteRepository;
+        private readonly IClienteRepository clienteRepository;
+        private readonly IRepresentanteRepository representanteRepository;
 
-        public ClienteController()
+        public ClienteController(IClienteRepository _clienteRepository, IRepresentanteRepository _representanteRepository)
         {
-            clienteRepository = new ClienteRepository();
-
-            //representanteRepository = new RepresentanteRepository();
-            representanteRepository = null;
+            clienteRepository = _clienteRepository;
+            representanteRepository = _representanteRepository;
         }
 
 
