@@ -20,56 +20,41 @@ namespace Fiap.Web.AspNet2.Repository
 
         public IList<RepresentanteModel> FindAll()
         {
-            using (context)
-            {
-                var lista = context.Representante.ToList();
-                return lista;
-            }
+            var lista = context.Representante.ToList();
+            return lista;
         }
 
 
 
         public RepresentanteModel FindById(int id)
         {
-            using (context)
-            {
-                var representante = context.Representante.Find(id);
-                return representante;
-            }
+            var representante = context.Representante.Find(id);
+            return representante;
         }
 
 
         public RepresentanteModel FindByIdWithClientes(int id)
         {
-            using (context)
-            {
-                var representante =
+            var representante = 
                 context.Representante
-                    .Include(r => r.Clientes)
-                    .SingleOrDefault(r => r.RepresentanteId == id);
+                    .Include( r => r.Clientes )
+                    .SingleOrDefault( r => r.RepresentanteId == id );
 
-                return representante;
-            }
+            return representante;
         }
 
 
 
         public void Insert(RepresentanteModel representanteModel)
         {
-            using (context)
-            {
-                context.Representante.Add(representanteModel);
-                context.SaveChanges();
-            }
+            context.Representante.Add(representanteModel);
+            context.SaveChanges();
         } 
 
         public void Update(RepresentanteModel representanteModel)
         {
-            using (context)
-            {
-                context.Representante.Update(representanteModel);
-                context.SaveChanges();
-            }
+            context.Representante.Update(representanteModel);
+            context.SaveChanges();
         }
 
         public void Delete(int id)
@@ -82,11 +67,8 @@ namespace Fiap.Web.AspNet2.Repository
 
         public void Delete(RepresentanteModel representanteModel)
         {
-            using (context)
-            {
-                context.Representante.Remove(representanteModel);
-                context.SaveChanges();
-            }
+            context.Representante.Remove(representanteModel);
+            context.SaveChanges();
         }
 
     }

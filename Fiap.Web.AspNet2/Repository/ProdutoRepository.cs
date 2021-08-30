@@ -19,56 +19,41 @@ namespace Fiap.Web.AspNet2.Repository
 
         public IList<ProdutoModel> FindAll()
         {
-            using (context)
-            {
-                return context.Produto.ToList();
-            }
+            return context.Produto.ToList();
         }
 
         public ProdutoModel FindById(int id)
         {
-            using (context)
-            {
-                var produtoModel = context.Produto
+            var produtoModel = context.Produto
                 .Include(p => p.ProdutoLojas)
-                    .ThenInclude(pl => pl.Loja)
-                .SingleOrDefault(p => p.ProdutoId == id);
+                    .ThenInclude ( pl => pl.Loja )
+                .SingleOrDefault( p => p.ProdutoId == id);
 
-                return produtoModel;
-            }
+            return produtoModel;
         }
 
 
         public int Insert(ProdutoModel produtoModel)
         {
-            using (context)
-            {
-                context.Produto.Add(produtoModel);
-                context.SaveChanges();
-                return produtoModel.ProdutoId;
-            }
+            context.Produto.Add(produtoModel);
+            context.SaveChanges();
+            return produtoModel.ProdutoId;
         }
 
         public void Delete(int id)
         {
-            using (context)
-            {
-                context.Produto.Remove(new ProdutoModel() { ProdutoId = id });
-                context.SaveChanges();
-            }
+            context.Produto.Remove(new ProdutoModel() { ProdutoId = id });
+            context.SaveChanges();
         }
 
         public void Update(ProdutoModel produtoModelNovo)
         {
-            using (context)
-            {
-                var produtoAtual = FindById(produtoModelNovo.ProdutoId);
-                produtoAtual.NomeProduto = produtoModelNovo.NomeProduto;
-                produtoAtual.ProdutoLojas = produtoModelNovo.ProdutoLojas;
+            var produtoAtual = FindById(produtoModelNovo.ProdutoId);
+            produtoAtual.NomeProduto = produtoModelNovo.NomeProduto;
+            produtoAtual.ProdutoLojas = produtoModelNovo.ProdutoLojas;
 
-                context.Produto.Update(produtoAtual);
-                context.SaveChanges();
-            }
+            context.Produto.Update(produtoAtual);
+            context.SaveChanges();
 
         }
 

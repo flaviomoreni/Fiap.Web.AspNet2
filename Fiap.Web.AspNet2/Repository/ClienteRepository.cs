@@ -18,50 +18,38 @@ namespace Fiap.Web.AspNet2.Repository
 
         public IList<ClienteModel> FindAll()
         {
-            using (context)
-            {
-                return context.Cliente.ToList();
-            }
+            return context.Cliente.ToList();
         }
 
         public ClienteModel FindById(int id)
         {
-            using( context ) { 
+            //var clienteModel = context.Cliente.Find(id);
 
-                var clienteModel = context.Cliente
-                        .Include(c => c.Representante)
-                        .SingleOrDefault(c => c.ClienteId == id);
+            var clienteModel = context.Cliente
+                    .Include(c => c.Representante)
+                    .SingleOrDefault(c => c.ClienteId == id);
 
-                return clienteModel;
-            }
+            return clienteModel;
 
         }
 
         public int Insert(ClienteModel clienteModel)
         {
-            using (context) { 
-                context.Cliente.Add(clienteModel);
-                context.SaveChanges();
-                return clienteModel.ClienteId;
-            }
+            context.Cliente.Add(clienteModel);
+            context.SaveChanges();
+            return clienteModel.ClienteId;
         }
 
         public void Delete(int id)
         {
-            using (context)
-            {
-                context.Cliente.Remove(new ClienteModel() { ClienteId = id });
-                context.SaveChanges();
-            }
+            context.Cliente.Remove(new ClienteModel() { ClienteId = id });
+            context.SaveChanges();
         }
 
         public void Update(ClienteModel clienteModel)
         {
-            using (context)
-            {
-                context.Cliente.Update(clienteModel);
-                context.SaveChanges();
-            }
+            context.Cliente.Update(clienteModel);
+            context.SaveChanges();
         }
 
     }
