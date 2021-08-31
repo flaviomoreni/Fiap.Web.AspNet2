@@ -1,6 +1,9 @@
+using AutoMapper;
 using Fiap.Web.AspNet2.Data;
+using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository;
 using Fiap.Web.AspNet2.Repository.Interface;
+using Fiap.Web.AspNet2.ViewModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +33,33 @@ namespace Fiap.Web.AspNet2
 
             var connectionString = Configuration.GetConnectionString("databaseUrl");
             services.AddDbContext<DataContext>(option => option.UseSqlServer(connectionString));
+
+            var mapperConfig = new AutoMapper.MapperConfiguration(
+                c =>
+                {
+                    c.CreateMap<ClienteViewModel, ClienteModel>();
+                    
+                    c.CreateMap<ClienteModel, ClienteViewModel>();
+                    
+                    c.CreateMap<RepresentanteViewModel, RepresentanteModel>();
+                    
+                    //c.CreateMap<RepresentanteModel, RepresentanteViewModel>().ForMember(
+                    //    v => v.Clientes, m => m.MapFrom(x => x.Clientes)
+                    //);
+
+                    c.CreateMap<RepresentanteModel, RepresentanteViewModel>()
+                        .ForMember(v => v.RepresentanteId, m => m.MapFrom(x => x.RepresentanteId))
+                        .ForMember(v => v.NomeRepresentante , m => m.MapFrom(x => x.RepresentanteId))
+                        .ForMember(v => v.Clientes, m => m.MapFrom(x => x.Clientes) );
+
+
+                    c.CreateMap<IList<RepresentanteViewModel>, IList<RepresentanteModel>>();
+
+                    c.CreateMap<ProdutoLojaViewModel, ProdutoModel>();
+                }
+            );
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddScoped<IRepresentanteRepository, RepresentanteRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();

@@ -1,40 +1,50 @@
-﻿using Fiap.Web.AspNet2.Models;
+﻿//using Fiap.Web.AspNet2.Models;
+using AutoMapper;
+using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository.Interface;
+using Fiap.Web.AspNet2.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
     public class RepresentanteController : Controller
     {
         private readonly IRepresentanteRepository representanteRepository;
+        private readonly IMapper mapper;
 
-        public RepresentanteController( IRepresentanteRepository _representanteRepository )
+        public RepresentanteController( IRepresentanteRepository _representanteRepository, IMapper _mapper )
         {
             representanteRepository = _representanteRepository;
+            mapper = _mapper;
         }
 
 
         [HttpGet]
         public IActionResult Index()
         {
-            IList<RepresentanteModel> clientes = representanteRepository.FindAll();
+            var representantes = 
+                mapper.Map<IList<RepresentanteViewModel>>(representanteRepository.FindAll());
 
-            return View(clientes);
+            return View(representantes);
         }
 
         [HttpGet]
         public IActionResult Novo()
         {
-            return View(new RepresentanteModel());
+            return View(new RepresentanteViewModel());
         }
 
         [HttpPost]
-        public IActionResult Novo(RepresentanteModel representanteModel)
+        public IActionResult Novo(RepresentanteViewModel representanteVM)
         {
+            var representanteModel = mapper.Map<RepresentanteModel>(representanteVM);
+
             representanteRepository.Insert(representanteModel);
 
-            TempData["mensagemSucesso"] = $"Representante {representanteModel.NomeRepresentante} cadastrado com sucesso";
+            TempData["mensagemSucesso"] = $"Representante {representanteVM.NomeRepresentante} cadastrado com sucesso";
             return RedirectToAction("Index");
         }
 
@@ -43,18 +53,21 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Alterar(int id)
         {
-            RepresentanteModel representanteModel = representanteRepository.FindById(id);
+            var representanteModel = representanteRepository.FindByIdWithClientes(id);
+            var representanteVM = mapper.Map<RepresentanteViewModel>(representanteModel);
 
-            return View(representanteModel);
+            return View(representanteVM);
         }
 
         //Capturando os dados, gravando no banco e exibindo a mensagem de sucesso.
         [HttpPost]
-        public IActionResult Alterar(RepresentanteModel representanteModel)
+        public IActionResult Alterar(RepresentanteViewModel representanteVM)
         {
+            var representanteModel = mapper.Map<RepresentanteModel>(representanteVM);
+
             representanteRepository.Update(representanteModel);
 
-            TempData["mensagemSucesso"] = $"Representante {representanteModel.NomeRepresentante} alterado com sucesso";
+            TempData["mensagemSucesso"] = $"Representante {representanteVM.NomeRepresentante} alterado com sucesso";
             return RedirectToAction("Index");
         }
 

@@ -1,4 +1,4 @@
-﻿@model RepresentanteModel
+﻿@model Fiap.Web.AspNet2.ViewModel.RepresentanteViewModel
 
 @{
 
@@ -18,6 +18,15 @@
                         <input class="form-control col-5" asp-for="NomeRepresentante" />
                     </div>
                     
+
+                    @if (Model.Clientes.Count() > 0) {
+                    <h2>Cliente:</h2>
+                        @foreach(var item in Model.Clientes)
+                        {
+                            @item.Nome <br />
+                        }
+                    }
+
                     <a href="#" class="btn btn-default btn-lg">Cancelar</a>
                     <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
                 </form>
