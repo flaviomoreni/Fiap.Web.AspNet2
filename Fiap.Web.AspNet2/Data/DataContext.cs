@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+using Fiap.Web.AspNet2.ViewModel;
 
 namespace Fiap.Web.AspNet2.Data
 {
@@ -84,6 +85,8 @@ namespace Fiap.Web.AspNet2.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Fiap.Web.AspNet2.ViewModel.FornecedorViewModel> FornecedorViewModel { get; set; }
 
 
 

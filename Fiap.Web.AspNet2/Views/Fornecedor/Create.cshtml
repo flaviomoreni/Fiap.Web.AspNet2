@@ -1,0 +1,89 @@
+﻿@model Fiap.Web.AspNet2.ViewModel.FornecedorViewModel
+
+<h4>FornecedorViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="formFornecedor">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Cnpj" class="control-label"></label>
+                <input asp-for="Cnpj" class="form-control" />
+                <span asp-validation-for="Cnpj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RazaoSocial" class="control-label"></label>
+                <input asp-for="RazaoSocial" class="form-control" />
+                <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" class="form-control" />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Endereco" class="control-label"></label>
+                <input asp-for="Endereco" class="form-control" />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataAbertura" class="control-label"></label>
+                <input asp-for="DataAbertura" type="text" class="form-control" />
+                <span asp-validation-for="DataAbertura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorCapitalSocial" class="control-label"></label>
+                <input asp-for="ValorCapitalSocial" class="form-control" />
+                <span asp-validation-for="ValorCapitalSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeFuncionarios" class="control-label"></label>
+                <input asp-for="QuantidadeFuncionarios" class="form-control" />
+                <span asp-validation-for="QuantidadeFuncionarios" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" id="botaoSubmit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+
+
+    $("#botaoSubmit").click(function () {
+
+        if ($("#Cnpj").val() == '') {
+            alert('CNPJ requerido');               
+            return;
+        }
+
+        $("#formFornecedor").submit();
+
+    });
+
+
+
+    $('#Cnpj').mask('00.000.000/0000-00', {
+        onKeyPress: function (cpfcnpj, e, field, options) {
+            $('#Cnpj').mask('00.000.000/0000-00', options);
+        }
+    });
+
+    $('#Telefone').mask('(00) 0 0000-0000', {
+        onKeyPress: function (telefone, e, field, options) {
+            $('#Telefone').mask('(00) 0 0000-0000', options);
+        }
+    });
+    
+
+</script>
