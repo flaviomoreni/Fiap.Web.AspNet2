@@ -29,10 +29,19 @@ namespace Fiap.Web.AspNet2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
 
             var connectionString = Configuration.GetConnectionString("databaseUrl");
-            services.AddDbContext<DataContext>(option => option.UseSqlServer(connectionString));
+            services.AddDbContext<DataContext>(option => option.UseSqlServer(connectionString)
+                                                         .EnableSensitiveDataLogging()
+                                                         .LogTo(Console.Write) );
 
             var mapperConfig = new AutoMapper.MapperConfiguration(
                 c =>
@@ -80,6 +89,8 @@ namespace Fiap.Web.AspNet2
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 

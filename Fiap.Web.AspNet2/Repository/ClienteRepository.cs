@@ -1,6 +1,7 @@
 ﻿using Fiap.Web.AspNet2.Data;
 using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository.Interface;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,38 @@ namespace Fiap.Web.AspNet2.Repository
         public IList<ClienteModel> FindAll()
         {
             return context.Cliente.ToList();
+        }
+
+
+        public IList<ClienteModel> FindByEmailAndRepresentante(string email, int idRepresentante)
+        {
+
+            var conditions = PredicateBuilder.New<ClienteModel>(true);
+
+            if ( ! string.IsNullOrWhiteSpace(email) )
+            {
+                conditions = conditions.And(c => c.Email == email);
+            }
+
+            if ( idRepresentante != 0 )
+            {
+                conditions = conditions.And(c => c.RepresentanteId == idRepresentante);
+            }
+
+            var clientes = context.Cliente
+                .Include(c => c.Representante)
+                .Where(conditions)
+                .ToList();
+
+            /*
+            var clientes = context.Cliente
+                .Include( c => c.Representante )
+                .Where( c => ( "" == email || c.Email == email ) && 
+                             ( 0 == idRepresentante || c.RepresentanteId == idRepresentante) )
+                .ToList();
+            */
+
+            return clientes;
         }
 
         public ClienteModel FindById(int id)

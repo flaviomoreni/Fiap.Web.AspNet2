@@ -1,5 +1,7 @@
-﻿using Fiap.Web.AspNet2.Models;
+﻿using Fiap.Web.AspNet2.Controllers.Filters;
+using Fiap.Web.AspNet2.Models;
 using Fiap.Web.AspNet2.Repository.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 
 namespace Fiap.Web.AspNet2.Controllers
 {
+    
     public class ClienteController : Controller
     {
 
@@ -23,10 +26,8 @@ namespace Fiap.Web.AspNet2.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
-            Console.WriteLine("validando o acesso ao controller Home e ação Index");
-
-            IList<ClienteModel> clientes = clienteRepository.FindAll();
+            //IList<ClienteModel> clientes = clienteRepository.FindAll();
+            IList<ClienteModel> clientes = clienteRepository.FindByEmailAndRepresentante("", 0);
 
             return View(clientes);
         }
@@ -64,6 +65,7 @@ namespace Fiap.Web.AspNet2.Controllers
 
         //Capturando os dados, gravando no banco e exibindo a mensagem de sucesso.
         [HttpPost]
+        [FiapFilter]
         public IActionResult Alterar(ClienteModel clienteModel)
         {
             clienteRepository.Update(clienteModel);
@@ -73,6 +75,7 @@ namespace Fiap.Web.AspNet2.Controllers
         }
 
         [HttpGet]
+        [FiapFilter]
         public IActionResult Detalhe(int id)
         {
             var clienteModel = clienteRepository.FindById(id);

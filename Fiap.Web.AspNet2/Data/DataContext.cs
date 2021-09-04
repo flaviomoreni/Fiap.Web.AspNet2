@@ -88,6 +88,8 @@ namespace Fiap.Web.AspNet2.Data
 
         public DbSet<Fiap.Web.AspNet2.ViewModel.FornecedorViewModel> FornecedorViewModel { get; set; }
 
+        public DbSet<Fiap.Web.AspNet2.ViewModel.LoginViewModel> LoginViewModel { get; set; }
+
 
 
 

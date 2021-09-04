@@ -7,6 +7,8 @@ namespace Fiap.Web.AspNet2.Repository.Interface
     {
         public IList<ClienteModel> FindAll();
 
+        public IList<ClienteModel> FindByEmailAndRepresentante(string email, int idRepresentante);
+
         public ClienteModel FindById(int id);
 
         public int Insert(ClienteModel clienteModel);
